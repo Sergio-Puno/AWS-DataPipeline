@@ -15,7 +15,6 @@ AWS Pipeline Project - Repository for project description and documentaiton alon
   - [Batch Processing](#batch-processing)
 - [PowerBI Visualization](#powerbi-visualization)
 - [Conclusion](#conclusion)
-- [Blog Post and Socials](#blog-post-and-socials)
 
 ---
 
@@ -29,27 +28,71 @@ The purpose of this personal project is to establish a data pipeline for e-comme
 
 
 # Dataset Overview
+The dataset used for this pipeline project came from a Kaggle project located [here](https://www.kaggle.com/datasets/carrie1/ecommerce-data). This information comes from a UK based retailer and represents a subset of actual transaction data from 2010 to 2011.
+
+As this dataset is a record of transactions, it is in a "long" format meaning invoice numbers will repeat for each unique item that was on the invoice. The column headers and the datatype I will use within AWS are:
+
+- InvoiceNo (text)
+- StockCode (text)
+- Description (text)
+- Quantity (integer)
+- InvoiceDate (text)
+- UnitPrice (float)
+- CustomerID (integer)
+- Country (text)
+
+Many of the fields will end up becoming text fields, including the invoice number which has instances of a "C" prefix so we cannot store this column as an integer.
+
+Looking ahead to how an analyst might be viewing this information, it is important to consider the exisitng fields as well as potential calculated fields that would be important to have. In this case having a total calculated cost for each line would be useful for invoice value aggreagations as well as determining highest revenue products.
 
 # Tools and Services
+For this project I will be focused on using Python as the scripting language for both the front end data streaming as well as the AWS Lambda functions within the pipeline.
+
+The AWS services used in this project include:
+- API Gateway
+- Kinesis / Kinesis Firehose
+- S3
+- DynamoDB
+- Redshift
+- Glue
+
+Secondary software used:
+- VS Code
+- Excel
+- PowerBI
 
 ## Connect
+Api Gateway
 
 ## Buffer
+Kinesis (message queue service)
+Kinesis Firehose (fore Redshift connection)
 
 ## Processing
+Lambda functions
 
 ## Storage
+S3 (raw data store)
+DynamoDB (noSQL store, wide column)
+Redshift (data warehouse)
 
 ## Visualization
+PowerBI (through Redshift connection)
 
 # Pipeline Breakdown
 
+
 ## Stream Processing
 
+For the stream processing pipeline I needed to setup a Python script that would mimic incoming transaction data as though it we being fed by multiple operational databases. This would simulate the situation of having multiple retail locations all processing their own invoices and streaming that data out of the OLTP data warehouse into our data pipeline and into a OLAP data warehouse.
+
 ## Batch Processing
+
+Contrary to the stream processing, our batch processing pipeline will mimic a workflow that involves bulk data dumps which may occur hourly, daily, etc. This process differs from the stream pipeline in a few key ways:
+
+- Not a continuous stream of data which requires a strong buffer system to manage triggers
+- Makes use of AWS Glue Crawlers to tracking new data files stored in an S3 bucket and executes a Spark Glue Job which transfers the data into a RedShift Table
 
 # PowerBI Visualization
 
 # Conclusion
-
-# Blog Post and Socials
