@@ -81,6 +81,7 @@ PowerBI (through Redshift connection)
 
 # Pipeline Breakdown
 
+![alt text](ref-images/pipeline_board.png)
 
 ## Stream Processing
 
