@@ -80,13 +80,13 @@ The tool we will use to power our visuals on the backend of this pipeline is Pow
 
 # Pipeline Breakdown
 
-![alt text](ref-images/pipeline_board.png)
+![pipeline tools](ref-images/pipeline_board.png)
 
 ## Stream Processing
 
 For the stream processing pipeline I needed to setup a Python script that would mimic incoming transaction data as though it we being fed by multiple operational databases. This would simulate the situation of having multiple retail locations all processing their own invoices and streaming that data out of the OLTP data warehouse into our data pipeline and into a OLAP data warehouse.
 
-<flow diagram here>
+![streaming pipeline](ref-images/streaming_pipeline_board.png)
 
 ## Batch Processing
 
@@ -101,7 +101,9 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 
 For our analytics team we need a tool that can plug into our Redshift data warehouse and allow users to create dashboards and monitor KPI's, for this we used Microsoft's PowerBI tool. 
 
-![alt text]()
+![sample dashboard](ref-images/powerbi_redshift_dashboard.PNG)
+
+The benefit to having this separate data warehouse to the operational warehouse is to remove the processing workload from impacting the business transactions. With the live query option in Power BI we are able to maintain access to updated information and build out dashboards as required by the business units.
 
 # Conclusion
 
