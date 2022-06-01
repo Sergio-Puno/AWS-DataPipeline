@@ -101,7 +101,7 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 
 For our analytics team we need a tool that can plug into our Redshift data warehouse and allow users to create dashboards and monitor KPI's, for this we used Microsoft's PowerBI tool. 
 
-<screenshots of dashboard>
+![alt text]()
 
 # Conclusion
 
