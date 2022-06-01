@@ -62,22 +62,21 @@ Secondary software used:
 - PowerBI
 
 ## Connect
-Api Gateway
+We will be using AWS's API Gateway service to provide our Python script access to standard functionalities such as `GET`, `PUT`, and `PUSH` calls to our pipeline. 
 
 ## Buffer
-Kinesis (message queue service)
-Kinesis Firehose (fore Redshift connection)
+Kinesis data stream will act as our buffer for incoming PUT calls via a Lambda event trigger which will write the data into Kinesis for further processing.
+
+Additionally, we'll be using Kinesis Firehose to as a delivery stream to our Redshift data warehouse to supply the data for our analytics dashboard.
 
 ## Processing
-Lambda functions
+Throughout the pipeline we will make use of Lambda functions in combination with event triggers to process data and move it along to the next stage of the pipeline. This provides modularity in our scripting and helps with testing individual components of the pipeline as it is setup or as problems arise for edge cases.
 
 ## Storage
-S3 (raw data store)
-DynamoDB (noSQL store, wide column)
-Redshift (data warehouse)
+We'll be making use of several data store solutions within AWS. First is S3 which will act as our raw data store. Second is DynamoDB which will be our noSQL store utilizing the wide column framework. Last is Redshift which will be the data warehouse supporting the analytics channel and provide the data for our dashboard tool.
 
 ## Visualization
-PowerBI (through Redshift connection)
+The tool we will use to power our visuals on the backend of this pipeline is PowerBI  which wil connect to our Redshift warehouse and allow business users to create dashboards and monitor select KPI's.
 
 # Pipeline Breakdown
 
@@ -87,6 +86,8 @@ PowerBI (through Redshift connection)
 
 For the stream processing pipeline I needed to setup a Python script that would mimic incoming transaction data as though it we being fed by multiple operational databases. This would simulate the situation of having multiple retail locations all processing their own invoices and streaming that data out of the OLTP data warehouse into our data pipeline and into a OLAP data warehouse.
 
+<flow diagram here>
+
 ## Batch Processing
 
 Contrary to the stream processing, our batch processing pipeline will mimic a workflow that involves bulk data dumps which may occur hourly, daily, etc. This process differs from the stream pipeline in a few key ways:
@@ -94,6 +95,18 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 - Not a continuous stream of data which requires a strong buffer system to manage triggers
 - Makes use of AWS Glue Crawlers to tracking new data files stored in an S3 bucket and executes a Spark Glue Job which transfers the data into a RedShift Table
 
+<flow diagram here>
+
 # PowerBI Visualization
 
+For our analytics team we need a tool that can plug into our Redshift data warehouse and allow users to create dashboards and monitor KPI's, for this we used Microsoft's PowerBI tool. 
+
+<screenshots of dashboard>
+
 # Conclusion
+
+One of the key takeaways I had throughout this process is that building a data pipeline will require extensive debugging, and to make resolving issues much less headache inducing you should make heavy use of CloudWatch logs. 
+
+Through a combination of manual print statements in Lambda functions alongside CloudWatch, I was able to easily see the flow of data and the actions being taken which in turn sped up the debugging process and also helped me to understand what exactly is happening behind the scenes as my data flows into the various services.
+
+This project has taught me a lot about how data pipelines work and the many considerations one needs to have when selecting the tools and solutions to implement as there is a lot of up front work that will have to be done in order to have a proper pipeline that works specifically for your needs.
