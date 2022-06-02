@@ -86,6 +86,11 @@ The tool we will use to power our visuals on the backend of this pipeline is Pow
 
 For the stream processing pipeline I needed to setup a Python script that would mimic incoming transaction data as though it we being fed by multiple operational databases. This would simulate the situation of having multiple retail locations all processing their own invoices and streaming that data out of the OLTP data warehouse into our data pipeline and into a OLAP data warehouse.
 
+The main features of this stream pipeline:
+
+- Use of Lambda functions to direct the flow of data through Kinesis into both an S3 bucket for raw storage and into DynamoDB which has wide column stores setup for API queries.
+- Contained pathways for operational data use in DynamoDB for invoice/customer queries and analytics use sending a copy of the data through Firehose into RedShift for Power BI.
+
 ![streaming pipeline](ref-images/streaming_pipeline_board.png)
 
 ## Batch Processing
@@ -95,7 +100,7 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 - Not a continuous stream of data which requires a strong buffer system to manage triggers
 - Makes use of AWS Glue Crawlers to tracking new data files stored in an S3 bucket and executes a Spark Glue Job which transfers the data into a RedShift Table
 
-<flow diagram here>
+![batch pipeline](ref-images/batch_pipeline_board.png)
 
 # PowerBI Visualization
 
