@@ -14,6 +14,7 @@ AWS Pipeline Project - Repository for project description and documentaiton alon
   - [Stream Processing](#stream-processing)
   - [Batch Processing](#batch-processing)
 - [PowerBI Visualization](#powerbi-visualization)
+- [Problems and Debugging](#problems-and-debugging)
 - [Conclusion](#conclusion)
 
 ---
@@ -80,6 +81,8 @@ The tool we will use to power our visuals on the backend of this pipeline is Pow
 
 # Pipeline Breakdown
 
+Visualizing the tools used for this project is easier when you group them into their individual containers. Typically a pipeline will consist of similar stages with just the tools themselves being swapped out for what makes sense or is currently used at a company.
+
 ![pipeline tools](ref-images/pipeline_board.png)
 
 ## Stream Processing
@@ -104,11 +107,19 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 
 # PowerBI Visualization
 
-For our analytics team we need a tool that can plug into our Redshift data warehouse and allow users to create dashboards and monitor KPI's, for this we used Microsoft's PowerBI tool. 
+For our analytics team we need a tool that can plug into our Redshift data warehouse and allow users to create dashboards and monitor KPI's, for this we used Microsoft's PowerBI tool. As I did not load all of the available data due to cost restrictions, analysis of the dataset would not be the focus of this project.
 
 ![sample dashboard](ref-images/powerbi_redshift_dashboard.PNG)
 
 The benefit to having this separate data warehouse to the operational warehouse is to remove the processing workload from impacting the business transactions. With the live query option in Power BI we are able to maintain access to updated information and build out dashboards as required by the business units.
+
+# Problems and Debugging
+
+Through any pipeline building process there will be issues that arise and problems to debug. I wanted to highlight a few things about debugging within the AWS platform and hopefully if you have issues you can use these tips to identify and resolve them.
+
+1. CloudWatch logging: AWS provides automated logs for just about all the services you setup and dumps them into their own folder within the CloudWatch service page. Be sure to check out  your service configuration or monitoring section to enable this.
+2. Local testing: When creating Lambda functions it is something difficult or tedious to continuously adjust and deploy changes and wait for the outcome in other services. You can recreate smaller pieces of the Lambda that you can iterate on locally prior to pushing them to live.
+3. Test one service at a time: I would strongly advise against setting up all the services you will require at the start and only work the incremental steps needed to ensure that each piece of the pipeline is effective on their own and can be test modularly.
 
 # Conclusion
 
