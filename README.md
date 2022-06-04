@@ -103,7 +103,7 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 - Not a continuous stream of data which requires a strong buffer system to manage triggers
 - Makes use of AWS Glue Crawlers to tracking new data files stored in an S3 bucket and executes a Spark Glue Job which transfers the data into a RedShift Table
 
-![batch pipeline](ref-images/batch_pipeline_board.png)
+![batch pipeline](ref-images/batch_pipeline_boardv2.png)
 
 # PowerBI Visualization
 
