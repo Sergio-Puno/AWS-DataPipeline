@@ -13,19 +13,19 @@ AWS Pipeline Project - Repository for project description and documentaiton alon
 - [Pipeline Breakdown](#pipeline-breakdown)
   - [Stream Processing](#stream-processing)
   - [Batch Processing](#batch-processing)
-- [PowerBI Visualization](#powerbi-visualization)
+- [Power BI Visualization](#power-bi-visualization)
 - [Problems and Debugging](#problems-and-debugging)
 - [Conclusion](#conclusion)
 
 ---
 
 # Introduction and Goals
-The purpose of this personal project is to establish a data pipeline for e-commerce data to be transported to a PowerBI dashboard for business analysts. There are many issues to be considered and many individual components that influence your ability to consolidate data within a company. A few of the initial considerations when beginning this project:
+The purpose of this personal project is to establish a data pipeline for e-commerce data to be transported to a Power BI dashboard for business analysts. There are many issues to be considered and many individual components that influence your ability to consolidate data within a company. A few of the initial considerations when beginning this project:
 
 - Data Sources: Internal operational database for transactions, CRM platforms, CSV or other file datasets.
-- Data Quality: The quality of the data being processesed directly impacts the services and tooling required to properly store and use the data for analytical purposes.
+- Data Quality: The quality of the data being processed directly impacts the services and tooling required to properly store and use the data for analytical purposes.
 - Internal Customers: All data pipelines have the potential to services multiple end clients inside the company rather than just a single group. There may be sales teams, executive level individuals, supply chain teams, machine maintenance teams and many more who require the pipeline to provide value for them.
-- Documentation: For each of the outputs that your pipeline connects to (dashboards, warehouses, data lakes, etc) all have an end use and a process that involves many source streams and transformations. All this required proper documentations and testing to ensure that the tema knows how each piece works and can quickly respond to issues that arise.
+- Documentation: For each of the outputs that your pipeline connects to (dashboards, warehouses, data lakes, etc) all have an end use and a process that involves many source streams and transformations. All this required proper documentations and testing to ensure that the team knows how each piece works and can quickly respond to issues that arise.
 
 
 # Dataset Overview
@@ -60,7 +60,8 @@ The AWS services used in this project include:
 Secondary software used:
 - VS Code
 - Excel
-- PowerBI
+- Power BI
+- Postman
 
 ## Connect
 We will be using AWS's API Gateway service to provide our Python script access to standard functionalities such as `GET`, `PUT`, and `PUSH` calls to our pipeline. 
@@ -77,7 +78,7 @@ Throughout the pipeline we will make use of Lambda functions in combination with
 We'll be making use of several data store solutions within AWS. First is S3 which will act as our raw data store. Second is DynamoDB which will be our noSQL store utilizing the wide column framework. Last is Redshift which will be the data warehouse supporting the analytics channel and provide the data for our dashboard tool.
 
 ## Visualization
-The tool we will use to power our visuals on the backend of this pipeline is PowerBI  which wil connect to our Redshift warehouse and allow business users to create dashboards and monitor select KPI's.
+The tool we will use to power our visuals on the backend of this pipeline is Power BI  which wil connect to our Redshift warehouse and allow business users to create dashboards and monitor select KPI's.
 
 # Pipeline Breakdown
 
@@ -105,7 +106,7 @@ Contrary to the stream processing, our batch processing pipeline will mimic a wo
 
 ![batch pipeline](ref-images/batch_pipeline_boardv2.png)
 
-# PowerBI Visualization
+# Power BI Visualization
 
 For our analytics team we need a tool that can plug into our Redshift data warehouse and allow users to create dashboards and monitor KPI's, for this we used Microsoft's PowerBI tool. As I did not load all of the available data due to cost restrictions, analysis of the dataset would not be the focus of this project.
 
@@ -120,6 +121,7 @@ Through any pipeline building process there will be issues that arise and proble
 1. CloudWatch logging: AWS provides automated logs for just about all the services you setup and dumps them into their own folder within the CloudWatch service page. Be sure to check out  your service configuration or monitoring section to enable this.
 2. Local testing: When creating Lambda functions it is something difficult or tedious to continuously adjust and deploy changes and wait for the outcome in other services. You can recreate smaller pieces of the Lambda that you can iterate on locally prior to pushing them to live.
 3. Test one service at a time: I would strongly advise against setting up all the services you will require at the start and only work the incremental steps needed to ensure that each piece of the pipeline is effective on their own and can be test modularly.
+4. Use Postman: Postman is a great tool for working with your API and ensuring that this foundational piece of the pipeline works correctly. Without a working API, you will not get far.
 
 # Conclusion
 
